@@ -65,7 +65,13 @@ function makeGroupFooter(group) {
   return footer;
 }
 
+function average(values) {
+  return values.reduce((sum, v) => sum + v, 0) / values.length;
+}
+
 export function drawChart(domains, displayItems) {
+  const avg = average(displayItems.map((d) => d.value));
+  const avgY = PLOT_HEIGHT - (avg / 20) * PLOT_HEIGHT;
   const chart = document.getElementById("chart");
   chart.innerHTML = "";
 
@@ -98,6 +104,11 @@ export function drawChart(domains, displayItems) {
 
   const groupsArea = document.createElement("div");
   groupsArea.className = "groups-area";
+
+  const meanLine = document.createElement("div");
+  meanLine.className = "mean-line";
+  meanLine.style.top = `${avgY}px`;
+  groupsArea.appendChild(meanLine);
 
   let domainIndex = 0;
 

@@ -210,6 +210,7 @@ h1 {
   align-items: flex-start;
   gap: 0;
   flex: none;
+  position: relative;
 }
 
 .group-column {
@@ -308,19 +309,28 @@ h1 {
 }
 
 .bar.projected {
-  opacity: 0.45;
-  background-image: repeating-linear-gradient(
+  opacity: 0.9;
+  /*background-image: repeating-linear-gradient(
     to top,
     rgba(255, 255, 255, 0.35) 0,
     rgba(255, 255, 255, 0.35) 6px,
     rgba(255, 255, 255, 0.05) 6px,
     rgba(255, 255, 255, 0.05) 12px
-  );
-  outline: 1px dashed rgba(80, 80, 80, 0.35);
+  );*/
+  background: white !important;
+  outline: 1px dashed rgba(40, 40, 40, 0.6);
 }
 
 .bar.relevant {
   box-shadow: 0 0 0 1px rgba(70, 70, 70, 0.18);
+}
+
+.mean-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-top: 2px dotted rgba(146, 7, 7, 0.466);
+  pointer-events: none;
 }
 
 #presetSelect {

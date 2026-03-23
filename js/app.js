@@ -3,7 +3,7 @@ import { state } from "./state.js";
 import { generateProfile } from "./generator.js";
 import { projectProfile } from "./lenses.js";
 import { drawChart } from "./chart.js";
-import { presetDefinitions } from "./presets.js";
+import { presetDefinitions } from "../data/presets.js";
 
 const totalPointsInput = document.getElementById("totalPoints");
 const varianceInput = document.getElementById("variance");
