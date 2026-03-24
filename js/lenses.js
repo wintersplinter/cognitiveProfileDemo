@@ -5,6 +5,7 @@ const IQ_DOMAIN_IDS = new Set([
   "symbolic_logic",
   "task_switching",
   "inhibition",
+  "working_memory",
   "error_monitoring",
   "goal_prioritization",
 ]);
@@ -18,11 +19,17 @@ const SCC_DOMAIN_IDS = new Set([
   "trust_attachment",
   "language_comprehension",
   "language_production",
+  "narrative_coherence",
   "self_awareness",
   "metacognition",
   "task_switching",
   "inhibition",
   "goal_prioritization",
+  "error_monitoring", //*
+  "task_switching", //*
+  "symbolic_logic", //*
+  "directed_attention", //*
+  "error_monitoring", //*
 ]);
 
 function clamp(value, min, max) {

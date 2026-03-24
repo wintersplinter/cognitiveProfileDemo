@@ -333,6 +333,18 @@ h1 {
   pointer-events: none;
 }
 
+.mean-label {
+  position: absolute;
+  right: 6px;
+  padding: 1px 6px;
+  font-size: 11px;
+  background: rgba(255, 255, 255, 0.88);
+  color: #555;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 999px;
+  pointer-events: none;
+}
+
 #presetSelect {
   max-width: 160px;
 }

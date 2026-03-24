@@ -37,7 +37,10 @@ function makeBar(domain, item, maxValue = 20) {
 
   const tag = item.projected ? "projected" : item.relevant ? "observed" : "raw";
 
-  bar.title = `${domain.label}: ${item.value.toFixed(1)} (${tag})`;
+  bar.title = `${domain.label}
+  ${domain.description ?? "No description available."}
+  Value: ${item.value.toFixed(1)}
+  Type: ${tag}`;
 
   plotSlot.appendChild(bar);
 
@@ -48,6 +51,8 @@ function makeBar(domain, item, maxValue = 20) {
   const label = document.createElement("div");
   label.className = "bar-label";
   label.textContent = domain.label;
+  label.title = `${domain.label}
+  ${domain.description ?? "No description available."}`;
 
   labelSlot.appendChild(label);
 
@@ -108,7 +113,14 @@ export function drawChart(domains, displayItems) {
   const meanLine = document.createElement("div");
   meanLine.className = "mean-line";
   meanLine.style.top = `${avgY}px`;
+
+  const meanLabel = document.createElement("div");
+  meanLabel.className = "mean-label";
+  meanLabel.style.top = `${avgY - 10}px`;
+  meanLabel.textContent = avg.toFixed(1);
+
   groupsArea.appendChild(meanLine);
+  groupsArea.appendChild(meanLabel);
 
   let domainIndex = 0;
 
