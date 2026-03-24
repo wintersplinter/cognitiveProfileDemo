@@ -230,6 +230,6 @@ export const presetDefinitions = {
       working_memory: 0,
       error_monitoring: -1,
       goal_prioritization: -2,
-    },*/
-  },
+    },
+  },*/
 };
