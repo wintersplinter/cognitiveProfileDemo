@@ -4,6 +4,7 @@ const IQ_DOMAIN_IDS = new Set([
   "language_production",
   "symbolic_logic",
   "task_switching",
+  "pattern_recognition",
   "inhibition",
   "working_memory",
   "error_monitoring",
@@ -11,25 +12,30 @@ const IQ_DOMAIN_IDS = new Set([
 ]);
 
 const SCC_DOMAIN_IDS = new Set([
+  "emotion_generation",
   "emotion_regulation",
   "motivation_drive",
   "affective_stability",
+
   "empathy",
   "social_signaling",
   "trust_attachment",
+  "group_dynamics",
+
   "language_comprehension",
   "language_production",
   "narrative_coherence",
+
   "self_awareness",
   "metacognition",
+
   "task_switching",
   "inhibition",
   "goal_prioritization",
-  "error_monitoring", //*
-  "task_switching", //*
-  "symbolic_logic", //*
-  "directed_attention", //*
-  "error_monitoring", //*
+
+  "error_monitoring", //*image and status, appearance of smart
+  "symbolic_logic", //*image and status, appearance of smart
+  "directed_attention", //*image and status, appearance of smart
 ]);
 
 function clamp(value, min, max) {
@@ -61,19 +67,54 @@ function seededJitter(index, strength = 0.35) {
 }
 
 /*
+  Voor IQ:
+  gewoon gemiddelde van de relevante domeinen.
+*/
+function inferIQMean(relevantValues) {
+  return average(relevantValues);
+}
+
+/*
+  Voor SCC:
+  negatieve afwijkingen wegen zwaarder dan positieve.
+
+  Idee:
+  - bereken eerst het gewone gemiddelde van de relevante SCC-domeinen
+  - kijk dan per waarde hoe ver die van dat gemiddelde afwijkt
+  - negatieve afwijkingen krijgen extra gewicht
+  - positieve afwijkingen tellen gewoon mee
+
+  Hierdoor zakken sociale "fricties" sterker door in het tijdelijke SCC-gemiddelde.
+*/
+function inferSCCMean(relevantValues) {
+  if (!relevantValues.length) return 10;
+
+  const baseMean = average(relevantValues);
+
+  const weightedValues = relevantValues.map((value) => {
+    const deviation = value - baseMean;
+
+    // Lage waarden trekken harder naar beneden
+    if (deviation < 0) {
+      return baseMean + deviation * 2; // 1.75 -> Negatieve afwijkingen krijgen 75% extra gewicht, waardoor ze zwaarder wegen in het inferentie-gemiddelde.
+    }
+
+    // Hoge waarden tellen gewoon normaal mee
+    return value;
+  });
+
+  return average(weightedValues);
+}
+
+/*
   Lens-projectie
 
-  Wat jij beschreef:
   - relevante domeinen blijven vast
-  - hun gemiddelde wordt het nieuwe tijdelijke gemiddelde
-  - niet-relevante domeinen behouden hun richting
-    t.o.v. het oude gemiddelde
+  - hun (lens-specifieke) gemiddelde wordt het tijdelijke nieuwe gemiddelde
+  - niet-relevante domeinen behouden hun richting t.o.v. het oude gemiddelde
   - maar die afwijking wordt samengedrukt
 */
 export function projectProfile(rawValues, domains, viewName) {
-  /*
-    Raw view = niets projecteren
-  */
   if (viewName === "raw") {
     return rawValues.map((value) => ({
       value,
@@ -93,35 +134,39 @@ export function projectProfile(rawValues, domains, viewName) {
   }
 
   /*
-    1. Oude echte gemiddelde van het volledige profiel
+    Oude echte gemiddelde van het volledige profiel.
   */
   const oldMean = average(rawValues);
 
   /*
-    2. Neem alleen de vaste / relevante domeinen
-       en bereken hun gemiddelde.
-       Dat wordt het tijdelijke nieuwe gemiddelde.
+    Neem alleen de relevante domeinen voor deze lens.
   */
   const relevantValues = rawValues.filter((_, index) =>
     relevantSet.has(domains[index].id),
   );
 
-  const inferredMean = average(relevantValues);
+  /*
+    IQ en SCC krijgen nu een ander type inferentie.
+  */
+  let inferredMean;
+
+  if (viewName === "iq") {
+    inferredMean = inferIQMean(relevantValues);
+  } else if (viewName === "scc") {
+    inferredMean = inferSCCMean(relevantValues);
+  } else {
+    inferredMean = average(relevantValues);
+  }
 
   /*
-    3. Compressiefactor:
-       hoe kleiner, hoe sterker alles naar het nieuwe gemiddelde schuift.
-       0.35 = nog herkenbare profielvorm
-       0.20 = sterk institutioneel platgetrokken
+    Compressie:
+    hoe kleiner, hoe platter de geprojecteerde niet-relevante domeinen.
   */
   const compression = 0.35;
 
   return rawValues.map((value, index) => {
     const isRelevant = relevantSet.has(domains[index].id);
 
-    /*
-      Relevante domeinen blijven vast staan.
-    */
     if (isRelevant) {
       return {
         value,
@@ -130,13 +175,6 @@ export function projectProfile(rawValues, domains, viewName) {
       };
     }
 
-    /*
-      Niet-relevante domeinen:
-      - bereken hun oude afwijking t.o.v. het oude gemiddelde
-      - druk die afwijking samen
-      - zet ze rond het nieuwe tijdelijke gemiddelde
-      - voeg mini-jitter toe zodat ze niet exact samenvallen
-    */
     const oldDeviation = value - oldMean;
     const compressedDeviation = oldDeviation * compression;
     const jitter = seededJitter(index, 0.3);

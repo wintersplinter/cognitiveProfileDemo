@@ -80,14 +80,14 @@ export const presetDefinitions = {
   neutral_random: {
     label: "Natural variation",
     description:
-      "Geen specifieke nadruk. Alle domeinen gedragen zich neutraal en worden alleen gestuurd door total points en variance.",
+      "No specific bias, just natural random variation around the mean. This serves as a baseline for comparison.",
     domainBias: {},
   },
 
   internal_modeling_dominant: {
     label: "Internal modeling dominant",
     description:
-      "Sterkere interne modellering, patroonherkenning, abstractie en zelfreflectie. Minder nadruk op directe externe leesbaarheid.",
+      "Stronger internal modeling, pattern recognition, abstraction and self-reflection. Less emphasis on direct external legibility.",
     domainBias: {
       causal_reasoning: 1,
       temporal_reasoning: 1,
@@ -123,7 +123,7 @@ export const presetDefinitions = {
   institutionally_legible: {
     label: "Institutionally legible",
     description:
-      "Sterker in taaloutput, symbolische helderheid en executieve regulatie. Wordt makkelijker positief gelezen door institutionele evaluatie.",
+      "Stronger in language output, symbolic clarity and executive regulation. It is easier to be positively read by institutional evaluation.",
     domainBias: {
       directed_attention: 1,
 
@@ -152,7 +152,7 @@ export const presetDefinitions = {
   socially_attuned: {
     label: "Socially attuned",
     description:
-      "Sterkere sociale afstemming, emotionele regulatie en communicatieve leesbaarheid. Wordt makkelijker ondersteund door sociale systemen.",
+      "Stronger social attunement, emotional regulation and communicative legibility. It is easier to be supported by social systems.",
     domainBias: {
       emotion_regulation: 2,
       motivation_drive: 1,
@@ -177,7 +177,7 @@ export const presetDefinitions = {
   creative_synthesis_dominant: {
     label: "Creative synthesis dominant",
     description:
-      "Sterkere creatieve hercombinatie, esthetische gevoeligheid en nieuwe oplossingsrichtingen. Minder nadruk op standaard regulatie en institutionele netheid.",
+      "Stronger creative synthesis, aesthetic sensitivity and novel problem-solving. Less emphasis on standard regulation and institutional clarity.",
     domainBias: {
       divergent_thinking: 2,
       conceptual_blending: 2,
@@ -198,7 +198,7 @@ export const presetDefinitions = {
   executive_language_bottleneck: {
     label: "Executive-language bottleneck",
     description:
-      "Lagere executieve regulatie en taaloutput, terwijl andere domeinen vrij kunnen variëren. Kan bij hoge total points en variance sterk verkeerd gelezen worden.",
+      "Lower executive regulation and language production, creating a bottleneck that can make the profile harder to read and support, but with potential hidden strengths in other areas.",
     domainBias: {
       language_comprehension: -1,
       language_production: -2,
@@ -212,7 +212,7 @@ export const presetDefinitions = {
     },
   },
 
-  NWOO: {
+  /*NWOO: {
     label: "NWOO",
     description:
       "Profiel met relatief zwakkere executieve functies en lagere taaloutput, waardoor sterke interne capaciteiten makkelijker verkeerd gelezen kunnen worden.",
@@ -230,6 +230,6 @@ export const presetDefinitions = {
       working_memory: 0,
       error_monitoring: -1,
       goal_prioritization: -2,
-    },
+    },*/
   },
 };

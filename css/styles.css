@@ -348,3 +348,29 @@ h1 {
 #presetSelect {
   max-width: 160px;
 }
+
+.tool-explanation {
+  max-width: 900px;
+  margin: 48px auto 0;
+  padding: 24px 28px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  color: #4a4a4a;
+  line-height: 1.65;
+}
+
+.tool-explanation h2 {
+  margin-top: 0;
+  font-size: 24px;
+}
+
+.tool-explanation h3 {
+  margin-top: 28px;
+  margin-bottom: 8px;
+  font-size: 18px;
+}
+
+.tool-explanation p {
+  margin: 10px 0;
+}

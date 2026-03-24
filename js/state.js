@@ -5,5 +5,5 @@ export const state = {
   variance: DEFAULT_VARIANCE,
   rawValues: [],
   activeLens: "raw",
-  activePreset: "balanced",
+  activePreset: "neutral_random",
 };
