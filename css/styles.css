@@ -28,6 +28,12 @@ body {
   margin: 0 auto;
   padding: 32px 24px 48px;
 }
+/*
+.page {
+  max-width: none;
+  margin: 0;
+  padding: 32px 12px 48px;
+}*/
 
 h1 {
   margin: 0 0 24px;
@@ -165,6 +171,8 @@ h1 {
 .chart-shell {
   margin-top: 8px;
   padding-bottom: 12px;
+  display: flex;
+  justify-content: center;
 }
 
 .chart-top {
